@@ -24,7 +24,7 @@ Date counter is a WordPress plugin that allows you to add a shortcode to count d
 ###### Example 3:
 
 - format="Years"
-- format="Nonths"
+- format="Months"
 - format="Days"
 
     INPUT:  It's been [DateCounter startDate="2017-12-31" endDate="now" format="Days"] days since New year!
