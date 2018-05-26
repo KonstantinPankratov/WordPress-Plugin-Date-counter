@@ -13,8 +13,10 @@ Date counter is a WordPress plugin that allows you to add a shortcode to count d
 - format="currentMonth"
 - format="currentDay"
 
+```
     INPUT:  It's [DateCounter format="currentYear"] now!
     OUTPUT: It's 2018 now!
+```
 
 ###### Example 2:
 
