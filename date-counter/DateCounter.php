@@ -8,56 +8,80 @@ Author: Konstantin Pankratov
 Author URI: http://kopa.pw/
 */
 
-function DateCounter($atts){
-	$startDate = $atts["startdate"];
-	$endDate   = strtolower($atts["enddate"]);
-	
-	switch (strtolower($atts["format"])) {
-		case "year":
-		case "years":
-			$startDate = new DateTime($startDate);
-			$endDate = new DateTime($endDate);
+function DateCounter($atts)
+{
 
-			$difference = $endDate->diff($startDate);
+    $format = strtolower($atts["format"]);
 
-			$result = $difference->y;
-		break;
-		case "month":
-		case "months":
-			$startDate = strtotime($startDate);
-			$endDate = strtotime($endDate);
+    $error = 'Error: check <b>%s</b>';
 
-			$min_date = min($startDate, $endDate);
-			$max_date = max($startDate, $endDate);
+    try {
+        $startDate = new DateTime($atts["startdate"]);
+    } catch (Exception $e) {
+        return sprintf($error, 'startDate');
+    }
 
-			$i = 0;
-			while (($min_date = strtotime("+1 MONTH", $min_date)) <= $max_date) {
-			    $i++;
-			}
+    try {
+        $endDate   = new DateTime($atts["enddate"]);
+    } catch (Exception $e) {
+        return sprintf($error, 'endDate');
+    }
 
-			$result = $i;
-		break;
-		case "day":
-		case "days":
-			$startDate = strtotime($startDate);
-			$endDate = strtotime($endDate);
+    $difference = $endDate->diff($startDate);
 
-			$difference = $endDate - $startDate;
+    switch ($format) {
+        case "year":
+        case "years":
+            $result = $difference->y;
+            break;
+        case "month":
+        case "months":
+            $result = ($difference->y * 12) + $difference->m;
+            break;
+        case "day":
+        case "days":
+            $result = $difference->days;
+            break;
+        case "hour":
+        case "hours":
+            $hours = $difference->days * 24;
+            $hours += $difference->h;
+            $result = $hours;
+            break;
+        case "minute":
+        case "minutes":
+            $minutes = $difference->days * 24 * 60;
+            $minutes += $difference->h * 60;
+            $minutes += $difference->i;
+            $result = $minutes;
+            break;
+        case "second":
+        case "seconds":
+            $seconds = $difference->days * 24 * 60 * 60;
+            $seconds += $difference->h * 60 * 60;
+            $seconds += $difference->i * 60;
+            $seconds += $difference->s;
+            $result = $seconds;
+            break;
+        case "currentyear":
+            $result = date("Y");
+            break;
+        case "currentmonth":
+            $result = date("m");
+            break;
+        case "currentday":
+            $result = date("d");
+            break;
+        default:
+            try {
+                $result = $difference->format($format);
+            } catch (Exception $e) {
+                return sprintf($error, 'format');
+            }
+            break;
+    }
 
-			$result = floor($difference / (60*60*24));
-		break;
-		case "currentyear":
-			$result = date("Y");
-		break;
-		case "currentmonth":
-			$result = date("m");
-		break;
-		case "currentday":
-			$result = date("d");
-		break;
-	}
-
-	return $result;
+    return $result;
 }
 
 add_shortcode( 'DateCounter', 'DateCounter' );
