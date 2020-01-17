@@ -3,7 +3,7 @@
 Plugin Name: Date counter
 Plugin URI: 
 Description: Date counter is a WordPress plugin that allows you to add a shortcode to count difference between two dates or display the current date easily.
-Version: 1.0.1
+Version: 1.0.2
 Author: Konstantin Pankratov
 Author URI: http://kopa.pw/
 */
