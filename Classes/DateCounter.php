@@ -32,8 +32,8 @@ class DateCounter extends AbstractDatetime
 				if (!isset($atts["enddate"]))
 					return self::error_message('<b>endDate</b> attribute is required.');
 
-				$start_date = new DateTime($atts["startdate"], $this->timezone);
-				$end_date = new DateTime($atts["enddate"], $this->timezone);
+				$start_date = $this->get_datetime($atts["startdate"]);
+				$end_date = $this->get_datetime($atts["enddate"]);
 
 				$difference = $end_date->diff($start_date, true);
 

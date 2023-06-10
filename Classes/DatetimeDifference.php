@@ -15,8 +15,8 @@ class DatetimeDifference extends AbstractDatetime
 			return self::error_message('<b>format</b> attribute is required.');
 
 		try {
-			$start_date = new DateTime($atts["startdate"], $this->timezone);
-			$end_date = new DateTime($atts["enddate"], $this->timezone);
+			$start_date = $this->get_datetime($atts["startdate"]);
+			$end_date = $this->get_datetime($atts["enddate"]);
 
 			$difference = $end_date->diff($start_date);
 

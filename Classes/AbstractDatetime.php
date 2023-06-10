@@ -26,6 +26,30 @@ abstract class AbstractDatetime
 		return $this;
 	}
 
+	protected function get_datetime(string $datetime_string) : DateTime
+	{
+		if (strpos(strtolower($datetime_string), 'post:') !== false)
+		{
+			list($post_type, $date_type) = explode(':', strtolower($datetime_string));
+
+			global $post;
+
+			switch ($date_type) {
+				case "created":
+					return new DateTime($post->post_date, $this->timezone);
+					break;
+				case "modified":
+					return new DateTime($post->post_modified, $this->timezone);
+					break;
+				default:
+					throw new Exception('Invalid date type, possible values are created and modified.');
+					break;
+			}
+		} else {
+			return new DateTime($datetime_string, $this->timezone);
+		}
+	}
+
 	protected static function error_message($message) {
 		return sprintf("<span style='color: #D50032;'>%s error:</span> %s", static::class, $message);
 	}
