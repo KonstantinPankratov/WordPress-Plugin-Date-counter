@@ -55,7 +55,7 @@ class TotalDatetimeDifference extends AbstractDatetime
 			}
 
 		} catch (Exception $e) {
-			$response = self::error_message($e);
+			$response = self::error_message($e->getMessage());
 		} finally {
 			return $response;
 		}

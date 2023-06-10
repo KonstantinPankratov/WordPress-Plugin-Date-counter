@@ -23,7 +23,7 @@ class DatetimeDifference extends AbstractDatetime
 			$response = $difference->format(self::normalize_format($atts['format']));
 
 		} catch (Exception $e) {
-			$response = self::error_message($e);
+			$response = self::error_message($e->getMessage());
 		} finally {
 			return $response;
 		}
