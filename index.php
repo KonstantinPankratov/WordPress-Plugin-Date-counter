@@ -9,6 +9,8 @@ Author: Konstantin Pankratov
 Author URI: http://kopa.pw/
 */
 
+if(!defined('ABSPATH')) exit;
+
 require_once __DIR__ . '/Classes/AbstractDatetime.php';
 require_once __DIR__ . '/Classes/CurrentDatetime.php';
 require_once __DIR__ . '/Classes/DatetimeDifference.php';
